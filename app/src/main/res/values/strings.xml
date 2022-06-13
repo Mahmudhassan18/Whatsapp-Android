@@ -10,5 +10,8 @@
     <string name="signup_confirm_password">Confirm Password</string>
     <string name="signup_login">Already signed up? Login.</string>
     <string name="signup_button">Signup</string>
-    <string name="login_signup">Do not have an account? Signup.</string>
+    <string name="login_signup">Dont have an account? Click here</string>
+    <string name="signupLogin">Already signed up? Click here</string>
+    <string name="add_contact_btnText">Add Contact</string>
+    <string name="add_contact_text">Contact Username</string>
 </resources>

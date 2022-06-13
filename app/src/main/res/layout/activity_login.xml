@@ -34,12 +34,15 @@
             android:hint="@string/login_etPassword"
             android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/textView"
+
+        <Button
+            android:id="@+id/loginSignupBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/login_signup" />
+            android:background="@android:color/transparent"
+            android:text="@string/login_signup"
+            android:textColor="@color/black"
+            />
 
         <Button
             android:id="@+id/button"
@@ -57,6 +60,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_whatsapp_logo" />
 
 
