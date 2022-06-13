@@ -1,0 +1,2 @@
+rootProject.name = "EX3AP2"
+include ':app'
