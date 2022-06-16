@@ -14,4 +14,9 @@
     <string name="signupLogin">Already signed up? Click here</string>
     <string name="add_contact_btnText">Add Contact</string>
     <string name="add_contact_text">Contact Username</string>
+    <string name="etNullField">ALL FIELDS MUST BE FILLED</string>
+    <string name="etPasswordNotMatched">Password doesn\'t match</string>
+    <string name="etPasswordPattern">Password must contain: number, upper&amp;lower digit, 6-20 length</string>
+    <string name="etUsernameUsed">Username is already used</string>
+
 </resources>

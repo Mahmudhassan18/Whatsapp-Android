@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -25,7 +25,7 @@
             android:hint="@string/signup_username" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/etNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -34,7 +34,7 @@
             android:hint="@string/signup_nickname" />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -43,7 +43,7 @@
             android:hint="@string/signup_password"/>
 
         <EditText
-            android:id="@+id/editTextTextPassword3"
+            android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -62,11 +62,20 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/signupBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/signup_button" />
+
+        <TextView
+            android:id="@+id/etSignupError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textSize="15dp"
+            android:textColor="@color/red"/>
     </LinearLayout>
 
     <ImageView
@@ -78,4 +87,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_whatsapp_logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
