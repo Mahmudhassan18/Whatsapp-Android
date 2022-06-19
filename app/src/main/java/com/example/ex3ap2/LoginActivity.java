@@ -16,13 +16,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private AppData appDB;
     private UserDao userDao;
-    private Intent usersIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         appDB = Room.databaseBuilder(getApplicationContext(), AppData.class, "UsersDB")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries().build();
         userDao = appDB.userDao();
 
@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginBtn.setOnClickListener(view -> {
-            usersIntent = new Intent(this, SignupTest.class);
             login();
         });
 
@@ -51,11 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         User user = userDao.get(username);
 
         if (user != null && user.getPassword().equals(password)){
-            startActivity(usersIntent);
+            Intent contactsIntent = new Intent(this, ContactsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("username", username);
+            contactsIntent.putExtras(bundle);
+            startActivity(contactsIntent);
         }
         else{
             tvLoginError.setText("Username or Password is incorrect");
         }
-
     }
 }

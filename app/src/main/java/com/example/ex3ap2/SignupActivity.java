@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 public class SignupActivity extends AppCompatActivity {
     private AppData appDB;
     private UserDao userDao;
-    private Intent loginIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +25,14 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         appDB = Room.databaseBuilder(getApplicationContext(), AppData.class, "UsersDB")
+                .fallbackToDestructiveMigration()
         .allowMainThreadQueries().build();
         userDao = appDB.userDao();
 
         Button signupLoginBtn = findViewById(R.id.signupLoginBtn);
         Button signupBtn = findViewById(R.id.signupBtn);
         signupLoginBtn.setOnClickListener(view -> {
-            loginIntent = new Intent(this, LoginActivity.class);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         });
 
@@ -74,6 +74,7 @@ public class SignupActivity extends AppCompatActivity {
         else{
             User user = new User(username, nickname, password);
             userDao.insert(user);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
     }

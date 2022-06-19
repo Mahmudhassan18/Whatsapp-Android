@@ -11,6 +11,7 @@
         android:id="@+id/lvContacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/custom_contacts_list"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

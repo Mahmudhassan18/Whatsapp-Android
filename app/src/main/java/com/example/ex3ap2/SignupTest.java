@@ -25,6 +25,7 @@ public class SignupTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_test);
         db = Room.databaseBuilder(getApplicationContext(), AppData.class, "UsersDB")
+                .fallbackToDestructiveMigration()
         .allowMainThreadQueries().build();
         userDao = db.userDao();
 
