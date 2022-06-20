@@ -11,10 +11,9 @@
         android:theme="@style/Theme.EX3AP2">
         <activity android:name=".SignupTest"></activity>
         <activity android:name=".AddContactActivity" />
-        <activity android:name=".ContactsActivity" />
-        <activity android:name=".SignupActivity" />
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".ContactsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

@@ -15,10 +15,10 @@ import com.example.ex3ap2.usersDB.User;
 
 import java.util.ArrayList;
 
-public class ContactsListAdapter extends ArrayAdapter<User> {
+public class ContactsListAdapterOLD extends ArrayAdapter<User> {
     LayoutInflater inflater;
 
-    public ContactsListAdapter(Context ctx, ArrayList<User> userArrayList){
+    public ContactsListAdapterOLD(Context ctx, ArrayList<User> userArrayList){
         super(ctx, R.layout.custom_contacts_list, userArrayList);
         this.inflater = LayoutInflater.from(ctx);
     }
@@ -29,8 +29,8 @@ public class ContactsListAdapter extends ArrayAdapter<User> {
         if (convertView == null){
             convertView = inflater.inflate(R.layout.custom_contacts_list, parent, false);
         }
-        ImageView profilePic = convertView.findViewById(R.id.profile_image);
-        TextView username = convertView.findViewById(R.id.user_name);
+        ImageView profilePic = convertView.findViewById(R.id.contact_profile_image);
+        TextView username = convertView.findViewById(R.id.contact_user_name);
 
         username.setText(user.getUsername());
         return convertView;

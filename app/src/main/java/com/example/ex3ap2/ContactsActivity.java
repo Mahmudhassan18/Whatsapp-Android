@@ -6,13 +6,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.ex3ap2.adapters.ContactsListAdapter;
+import com.example.ex3ap2.entities.Contact;
 import com.example.ex3ap2.usersDB.User;
 import com.example.ex3ap2.usersDB.UserDao;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
@@ -22,6 +28,23 @@ public class ContactsActivity extends AppCompatActivity {
     private ArrayAdapter<User> adapter;
     private User loggedUser;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contacts);
+
+        RecyclerView lstContacts = findViewById(R.id.lstContacts);
+        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        lstContacts.setAdapter(adapter);
+        lstContacts.setLayoutManager(new LinearLayoutManager(this));
+
+        List<Contact> lst = new LinkedList<Contact>();
+        lst.add(new Contact("hi", "HI", "idk", "gud", "time"));
+        lst.add(new Contact("bye", "BYE", "idfk", "bad", "timing"));
+        adapter.setContacts(lst);
+    }
+
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,5 +93,5 @@ public class ContactsActivity extends AppCompatActivity {
         contacts.clear();
         contacts.addAll(loggedUser.getContacts());
         adapter.notifyDataSetChanged();
-    }
+    }*/
 }
