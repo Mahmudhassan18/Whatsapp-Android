@@ -8,9 +8,10 @@ package com.example.ex3ap2.entities;
 
 @Entity
 public class Contact {
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private String username;
 
     private String nickname;
 
@@ -22,8 +23,8 @@ public class Contact {
 
     private int pic;
 
-    public Contact(String id, String nickname, String server, String last, String lastdate) {
-        this.id = id;
+    public Contact(String username, String nickname, String server, String last, String lastdate) {
+        this.username = username;
         this.nickname = nickname;
         this.server = server;
         this.last = last;
@@ -31,17 +32,15 @@ public class Contact {
         this.pic = R.drawable.ic_defaultimage;
     }
 
-    public String getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public String getNickname() {
-        return nickname;
-    }
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public String getNickname() { return nickname; }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;

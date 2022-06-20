@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ex3ap2.R;
 import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.viewmodels.ContactsViewModel;
 
 import java.util.List;
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
-    class ContactViewHolder extends  RecyclerView.ViewHolder {
+    class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView contactItemNickname;
         private final TextView contactItemLast;
         private final TextView contactItemLastdate;
@@ -33,9 +34,11 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
+    private ContactsViewModel viewModel;
 
-    public ContactsListAdapter(Context context) {
+    public ContactsListAdapter(Context context, ContactsViewModel viewModel) {
         mInflater = LayoutInflater.from(context);
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -52,6 +55,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.contactItemLast.setText(current.getLast());
             holder.contactItemLastdate.setText(current.getLastdate());
             holder.contactItemPic.setImageResource(current.getPic());
+
+            holder.itemView.setOnLongClickListener(l -> {
+                viewModel.delete(current);
+
+                return true;
+            });
 
             holder.contactItemNickname.setTypeface(null, Typeface.BOLD);
         }

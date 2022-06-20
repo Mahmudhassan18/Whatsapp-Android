@@ -6,14 +6,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ex3ap2.adapters.ContactsListAdapter;
 import com.example.ex3ap2.entities.Contact;
 import com.example.ex3ap2.usersDB.User;
 import com.example.ex3ap2.usersDB.UserDao;
+import com.example.ex3ap2.viewmodels.ContactsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -22,10 +25,13 @@ import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
+    private ContactsViewModel viewModel;
+    private ContactsListAdapter adapter;
+
     private AppData db;
     private UserDao userDao;
     private ArrayList<User> contacts;
-    private ArrayAdapter<User> adapter;
+    //private ArrayAdapter<User> adapter;
     private User loggedUser;
 
     @Override
@@ -33,15 +39,31 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+        viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        adapter = new ContactsListAdapter(this, viewModel);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Contact> lst = new LinkedList<Contact>();
-        lst.add(new Contact("hi", "HI", "idk", "gud", "time"));
-        lst.add(new Contact("bye", "BYE", "idfk", "bad", "timing"));
-        adapter.setContacts(lst);
+        viewModel.get().observe(this, contacts -> {
+            adapter.setContacts(contacts);
+        });
+
+        FloatingActionButton addContactFloatingBtn = findViewById(R.id.addContactFloatingBtn);
+        addContactFloatingBtn.setOnClickListener(view -> {
+            Intent addContactIntent = new Intent(this, AddContactActivity.class);
+            Bundle bundle2 = new Bundle();
+            bundle2.putString("username", "Empty for now");
+            addContactIntent.putExtras(bundle2);
+            startActivity(addContactIntent);
+        });
+
+        SwipeRefreshLayout swl = findViewById(R.id.contactsRefreshLayout);
+        swl.setOnRefreshListener(() -> {
+            viewModel.reload();
+            swl.setRefreshing(false);
+        });
     }
 
     /*

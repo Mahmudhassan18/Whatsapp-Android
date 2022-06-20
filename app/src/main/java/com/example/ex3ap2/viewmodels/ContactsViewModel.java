@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.repositories.ContactsRepository;
 
 import java.util.List;
 
 public class ContactsViewModel extends ViewModel {
-    /*private ContactsRepository mRepository;
+    private ContactsRepository mRepository;
     private LiveData<List<Contact>> contacts;
 
     public ContactsViewModel() {
@@ -30,5 +31,5 @@ public class ContactsViewModel extends ViewModel {
 
     public void reload() {
         mRepository.reload();
-    }*/
+    }
 }
