@@ -1,6 +1,6 @@
 package com.example.ex3ap2;
 
-import com.example.ex3ap2.usersDB.User;
+import com.example.ex3ap2.entities.User;
 
 import java.util.Date;
 

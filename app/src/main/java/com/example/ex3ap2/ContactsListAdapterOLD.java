@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.ex3ap2.usersDB.User;
+import com.example.ex3ap2.entities.User;
 
 import java.util.ArrayList;
 

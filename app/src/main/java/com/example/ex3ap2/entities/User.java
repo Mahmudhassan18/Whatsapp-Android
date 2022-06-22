@@ -1,10 +1,11 @@
-package com.example.ex3ap2.usersDB;
+package com.example.ex3ap2.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import java.util.ArrayList;
+import com.example.ex3ap2.typeconverters.ContactsConvertor;
+
 import java.util.List;
 
 @Entity
@@ -12,21 +13,24 @@ public class User {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private final String username;
-    private final String name;
-    private final String password;
-    @TypeConverters(ContactsConvertor.class)
-    private List<User> contacts;
 
-    public User(String username, String name, String password) {
+    private final String username;
+
+    private final String name;
+
+    private final String password;
+
+    @TypeConverters(ContactsConvertor.class)
+    private List<Contact> contacts;
+
+    public User(String username, String name, String password, List<Contact> contacts) {
         this.username = username;
         this.name = name;
         this.password = password;
-        this.contacts = new ArrayList<>();
-
+        this.contacts = contacts;
     }
 
-    public List<User> getContacts() {
+    public List<Contact> getContacts() {
         return contacts;
     }
 
@@ -46,15 +50,15 @@ public class User {
 
     public void setId(int id){ this.id = id; }
 
-    public void setContacts(List<User> contacts) {
+    public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
 
-    public void addContact(User contact){
+    public void addContact(Contact contact){
         contacts.add(contact);
     }
 
-    public void removeContact(User contact){
+    public void removeContact(Contact contact){
         contacts.remove(contact);
     }
 

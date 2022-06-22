@@ -8,26 +8,36 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
-import com.example.ex3ap2.usersDB.User;
-import com.example.ex3ap2.usersDB.UserDao;
+import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.entities.User;
+import com.example.ex3ap2.viewmodels.ContactsViewModel;
+import com.example.ex3ap2.viewmodels.UsersViewModel;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
+
+    private UsersViewModel viewModel;
+    private List<User> users;
+
+    /*
     private AppData appDB;
     private UserDao userDao;
-
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        appDB = Room.databaseBuilder(getApplicationContext(), AppData.class, "UsersDB")
-                .fallbackToDestructiveMigration()
-        .allowMainThreadQueries().build();
-        userDao = appDB.userDao();
+        viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
+        viewModel.get().observe(this, users -> {
+            this.users = users;
+        });
 
         Button signupLoginBtn = findViewById(R.id.signupLoginBtn);
         Button signupBtn = findViewById(R.id.signupBtn);
@@ -59,7 +69,10 @@ public class SignupActivity extends AppCompatActivity {
         String PASSWORD_PATTERN =
                 "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
         Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-        if (username == null || nickname == null || password == null || rePassword == null){
+        if (users == null) {
+            etError.setText("Loading data");
+        }
+        else if (username == null || nickname == null || password == null || rePassword == null){
             etError.setText(R.string.etNullField);
         }
         else if(!password.equals(rePassword)){
@@ -68,14 +81,24 @@ public class SignupActivity extends AppCompatActivity {
         else if(!pattern.matcher(password).matches()){
             etError.setText(R.string.etPasswordPattern);
         }
-        else if(userDao.get(username) != null){
+        else if(doesUsernameExist(username)){
             etError.setText(R.string.etUsernameUsed);
         }
-        else{
-            User user = new User(username, nickname, password);
-            userDao.insert(user);
+        else {
+            User user = new User(username, nickname, password, new LinkedList<>());
+            viewModel.add(user);
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
+    }
+
+    private boolean doesUsernameExist(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

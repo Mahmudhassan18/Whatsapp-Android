@@ -58,7 +58,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
             holder.itemView.setOnLongClickListener(l -> {
                 viewModel.delete(current);
-
                 return true;
             });
 
