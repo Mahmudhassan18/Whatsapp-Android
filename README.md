@@ -6,6 +6,7 @@ Ilay Daniel 326646650<br />
 Start by cloning the repository to android studio.<br />
 Then clone the repotiroy of the server to visual studio:<br />
 https://github.com/GitBitWheat/ap2ex3_server.git<br />
+There's a new repository for the server because the server from the second assignment worked with static lists, while the new server works with a database.<br />
 Run both projects.<br />
 
 Firebase wasn't implemented.<br />
