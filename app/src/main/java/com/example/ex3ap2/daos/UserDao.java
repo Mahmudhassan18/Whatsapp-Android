@@ -1,8 +1,11 @@
-package com.example.ex3ap2.usersDB;import androidx.room.Dao;
+package com.example.ex3ap2.daos;import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.entities.User;
 
 import java.util.List;
 

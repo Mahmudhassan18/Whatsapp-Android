@@ -1,10 +1,10 @@
 package com.example.ex3ap2.entities;
 
-        import androidx.annotation.NonNull;
-        import androidx.room.Entity;
-        import androidx.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-        import com.example.ex3ap2.R;
+import com.example.ex3ap2.R;
 
 @Entity
 public class Contact {
@@ -23,24 +23,33 @@ public class Contact {
 
     private int pic;
 
-    public Contact(String username, String nickname, String server, String last, String lastdate) {
+    private String user;
+
+    public Contact(String username, String nickname, String server, String last, String lastdate, String user) {
         this.username = username;
         this.nickname = nickname;
         this.server = server;
         this.last = last;
         this.lastdate = lastdate;
         this.pic = R.drawable.ic_defaultimage;
+        this.user = user;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id; }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username; }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username; }
 
-    public String getNickname() { return nickname; }
+    public String getNickname() {
+        return nickname; }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -76,5 +85,13 @@ public class Contact {
 
     public void setPic(int pic) {
         this.pic = pic;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String userId) {
+        this.user = user;
     }
 }

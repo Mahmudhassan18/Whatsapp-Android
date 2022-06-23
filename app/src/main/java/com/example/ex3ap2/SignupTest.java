@@ -7,8 +7,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.example.ex3ap2.usersDB.User;
-import com.example.ex3ap2.usersDB.UserDao;
+import com.example.ex3ap2.entities.User;
+import com.example.ex3ap2.daos.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;

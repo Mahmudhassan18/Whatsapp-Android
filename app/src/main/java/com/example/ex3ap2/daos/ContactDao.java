@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.entities.User;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface ContactDao {
 
     @Query("SELECT * FROM contact Where id = :id")
     Contact get(int id);
+
+    @Query("SELECT * FROM contact Where user = :user")
+    List<Contact> getContactsOfUser(String user);
 
     @Insert
     void insert(Contact... Contacts);

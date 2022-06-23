@@ -2,51 +2,51 @@ package com.example.ex3ap2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ex3ap2.adapters.ContactsListAdapter;
-import com.example.ex3ap2.entities.Contact;
-import com.example.ex3ap2.usersDB.User;
-import com.example.ex3ap2.usersDB.UserDao;
+import com.example.ex3ap2.entities.User;
+import com.example.ex3ap2.viewmodelfactories.ContactsViewModelFactory;
 import com.example.ex3ap2.viewmodels.ContactsViewModel;
+import com.example.ex3ap2.viewmodels.UsersViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
-    private ContactsViewModel viewModel;
+    private ContactsViewModel contactsViewModel;
     private ContactsListAdapter adapter;
+    private User loggedUser;
 
+    /*
     private AppData db;
     private UserDao userDao;
     private ArrayList<User> contacts;
-    //private ArrayAdapter<User> adapter;
-    private User loggedUser;
+    private ArrayAdapter<User> adapter;
+    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+        Bundle bundle = getIntent().getExtras();
+        String loggedUsername = bundle.getString("username");
+        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUsername)).get(ContactsViewModel.class);
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        adapter = new ContactsListAdapter(this, viewModel);
+        adapter = new ContactsListAdapter(this, contactsViewModel);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.get().observe(this, contacts -> {
+        contactsViewModel.get().observe(this, contacts -> {
             adapter.setContacts(contacts);
         });
 
@@ -54,14 +54,14 @@ public class ContactsActivity extends AppCompatActivity {
         addContactFloatingBtn.setOnClickListener(view -> {
             Intent addContactIntent = new Intent(this, AddContactActivity.class);
             Bundle bundle2 = new Bundle();
-            bundle2.putString("username", "Empty for now");
+            bundle2.putString("username", loggedUsername);
             addContactIntent.putExtras(bundle2);
             startActivity(addContactIntent);
         });
 
         SwipeRefreshLayout swl = findViewById(R.id.contactsRefreshLayout);
         swl.setOnRefreshListener(() -> {
-            viewModel.reload();
+            contactsViewModel.reload();
             swl.setRefreshing(false);
         });
     }

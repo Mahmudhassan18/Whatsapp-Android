@@ -22,6 +22,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         private final TextView contactItemLast;
         private final TextView contactItemLastdate;
         private final ImageView contactItemPic;
+        private final ImageView removeContactImg;
 
         private ContactViewHolder(View itemView) {
             super(itemView);
@@ -29,6 +30,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             contactItemLast = itemView.findViewById(R.id.latest_message);
             contactItemLastdate = itemView.findViewById(R.id.latest_message_date);
             contactItemPic = itemView.findViewById(R.id.contact_profile_image);
+            removeContactImg = itemView.findViewById(R.id.removeContactImg);
         }
     }
 
@@ -56,10 +58,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.contactItemLastdate.setText(current.getLastdate());
             holder.contactItemPic.setImageResource(current.getPic());
 
-            holder.itemView.setOnLongClickListener(l -> {
+            holder.removeContactImg.setOnClickListener(l -> {
                 viewModel.delete(current);
-
-                return true;
             });
 
             holder.contactItemNickname.setTypeface(null, Typeface.BOLD);

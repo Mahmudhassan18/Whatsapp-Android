@@ -9,30 +9,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
 import com.example.ex3ap2.entities.Contact;
-import com.example.ex3ap2.usersDB.User;
-import com.example.ex3ap2.usersDB.UserDao;
+import com.example.ex3ap2.entities.User;
+import com.example.ex3ap2.viewmodelfactories.ContactsViewModelFactory;
 import com.example.ex3ap2.viewmodels.ContactsViewModel;
+import com.example.ex3ap2.viewmodels.UsersViewModel;
 
 import java.util.List;
 
 public class AddContactActivity extends AppCompatActivity {
 
-    private ContactsViewModel contacstViewModel;
+    private ContactsViewModel contactsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        contacstViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-        /*
-        db = Room.databaseBuilder(getApplicationContext(), AppData.class, "UsersDB")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries().build();
-        userDao = db.userDao();*/
+        Bundle bundle = getIntent().getExtras();
+        String loggedUsername = bundle.getString("username");
+        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUsername)).get(ContactsViewModel.class);
 
         Button addContactBtn = findViewById(R.id.addContactBtn);
         addContactBtn.setOnClickListener(view -> {
@@ -51,11 +48,12 @@ public class AddContactActivity extends AppCompatActivity {
                 return;
             }
 
-            Contact contact = new Contact(username, nickname, server, "", "");
-            contacstViewModel.add(contact);
-
             Intent contactsIntent = new Intent(this, ContactsActivity.class);
-            startActivity(contactsIntent);
+            Bundle bundle2 = new Bundle();
+            bundle2.putString("username", loggedUsername);
+            contactsIntent.putExtras(bundle2);
+
+            contactsViewModel.add(username, nickname, server, this, contactsIntent, errorTv);
 
             /*EditText etUsername = findViewById(R.id.addContactUsername);
             TextView errorTv = findViewById(R.id.tvAddContactError);
@@ -75,8 +73,8 @@ public class AddContactActivity extends AppCompatActivity {
         });
     }
 
-    protected void addContact(@NonNull User loggedUser, @NonNull User userToAdd){
-        /*loggedUser.addContact(userToAdd);
+    /*protected void addContact(@NonNull User loggedUser, @NonNull User userToAdd){
+        loggedUser.addContact(userToAdd);
         userDao.update(loggedUser);
         userToAdd.addContact(loggedUser);
         userDao.update(userToAdd);//TODO UPDATE userToAdd (GETTING SOME KIND OF ERROR)
@@ -86,6 +84,6 @@ public class AddContactActivity extends AppCompatActivity {
         Bundle bundle1 = new Bundle();
         bundle1.putString("username", loggedUser.getUsername());
         contactsIntent.putExtras(bundle1);
-        startActivity(contactsIntent);*/
-    }
+        startActivity(contactsIntent);
+    }*/
 }

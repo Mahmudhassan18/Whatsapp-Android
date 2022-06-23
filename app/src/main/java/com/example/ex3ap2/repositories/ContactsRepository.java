@@ -1,69 +1,70 @@
 package com.example.ex3ap2.repositories;
 
+import android.content.Intent;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ex3ap2.AppData;
+import com.example.ex3ap2.api.ContactAPI;
 import com.example.ex3ap2.daos.ContactDao;
 import com.example.ex3ap2.entities.Contact;
+import com.example.ex3ap2.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class ContactsRepository {
+    private String username;
     private ContactDao dao;
     private ContactListData contactListData;
-    //private PostAPI api;
+    private ContactAPI api;
 
-    public ContactsRepository() {
-
+    public ContactsRepository(String username) {
         AppData db = AppData.getInstance();
         dao = db.contactDao();
         contactListData = new ContactListData();
-        //api = new PostAPI(postListData, dao);
+        api = new ContactAPI(contactListData, dao, username);
+        this.username = username;
 
+        api.getAllContacts();
     }
 
     public LiveData<List<Contact>> getAll() {
         return contactListData;
     }
 
-    public void add (final Contact contact) {
-        dao.insert(contact);
-        //api.add(contact);
+    public void add (String contactUsername, String contactNickname, String server,
+                     AppCompatActivity addContactActivity, Intent contactsIntent, TextView etError) {
+        api.addContact(contactUsername, contactNickname, server, addContactActivity, contactsIntent, etError);
     }
 
     public void delete (final Contact contact) {
-        dao.delete(contact);
-        contactListData.onActive();
-        //api.delete(contact);
+        api.deleteContact(contact);
     }
 
     public void reload() {
-        dao.index();
-        contactListData.onActive();
-        //api.get();
+        api.getAllContacts();
     }
 
-    class ContactListData extends MutableLiveData<List<Contact>> {
+    public class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             super();
             setValue(new LinkedList<>());
-
-            /*List<Contact> lst = new LinkedList<Contact>();
-            lst.add(new Contact("hi", "HI", "idk", "gud", "time"));
-            lst.add(new Contact("bye", "BYE", "idfk", "bad", "timing"));
-            setValue(lst);*/
         }
 
         @Override
         protected void onActive() {
             super.onActive();
+            contactListData.updateData();
+        }
 
+        public void updateData() {
             new Thread(() -> {
-                contactListData.postValue(dao.index());
+                contactListData.postValue(dao.getContactsOfUser(username));
             }).start();
-            //contactListData.setValue(dao.index());
         }
     }
 }
