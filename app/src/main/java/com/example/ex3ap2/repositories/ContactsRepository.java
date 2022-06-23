@@ -47,7 +47,6 @@ public class ContactsRepository {
 
     public void reload() {
         api.getAllContacts();
-        contactListData.updateData();
     }
 
     public class ContactListData extends MutableLiveData<List<Contact>> {

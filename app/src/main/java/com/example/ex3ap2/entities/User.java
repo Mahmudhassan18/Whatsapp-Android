@@ -2,11 +2,6 @@ package com.example.ex3ap2.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.example.ex3ap2.typeconverters.ContactsConvertor;
-
-import java.util.List;
 
 @Entity
 public class User {

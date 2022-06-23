@@ -37,10 +37,10 @@ public interface WebServiceAPI {
     Call<Void> deleteContact(@Header("Authorization") String token, @Path("id") String contactUsername);
 
     @GET("contacts/{id}/messages")
-    Call<List<MessageModelAPI>> getAllMessageOfContact(@Header("Authorization") String token, @Path("id") String contactUsername);
+    Call<List<MessageModelAPI>> getAllMessagesOfContact(@Header("Authorization") String token, @Path("id") String contactUsername);
 
     @POST("contacts/{id}/messages")
-    Call<Void> addMessage(@Header("Authorization") String token, @Path("id") String contactUsername, @Body MessageContentModelAPI messageContent);
+    Call<Void> sendMessage(@Header("Authorization") String token, @Path("id") String contactUsername, @Body MessageContentModelAPI messageContent);
 
     @POST("invitations")
     Call<Void> invite(@Header("Authorization") String token, @Body InvitationModelAPI invitationModel);

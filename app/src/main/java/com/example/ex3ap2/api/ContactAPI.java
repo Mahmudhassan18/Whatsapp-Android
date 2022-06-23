@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ex3ap2.MyApplication;
 import com.example.ex3ap2.R;
 import com.example.ex3ap2.api.actionmodels.ContactModelAPI;
+import com.example.ex3ap2.api.actionmodels.InvitationModelAPI;
 import com.example.ex3ap2.api.actionmodels.NewContactModelAPI;
 import com.example.ex3ap2.daos.ContactDao;
 import com.example.ex3ap2.entities.Contact;
@@ -54,6 +55,8 @@ public class ContactAPI {
 
                 for (ContactModelAPI contactModel : contactModelsFromServer)
                     dao.insert(new Contact(contactModel.id, contactModel.name, contactModel.server, contactModel.last, contactModel.lastdate, username));
+
+                contactListData.updateData();
             }
 
             @Override
@@ -70,6 +73,7 @@ public class ContactAPI {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 dao.insert(new Contact(contactUsername, contactNickname, server, null, null, username));
                 contactListData.updateData();
+                webServiceAPI.invite("Bearer " + MyApplication.token, new InvitationModelAPI(username, contactUsername, server));
                 addContactActivity.startActivity(contactsIntent);
             }
 
