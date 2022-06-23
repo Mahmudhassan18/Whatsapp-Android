@@ -11,6 +11,6 @@ Run both projects.<br />
 
 Firebase wasn't implemented.<br />
 Note that our computers weren't powerful enough to run both projects at the same time.<br />
-We tried to upload the server to the university servers, but we didn't succeed in doing so.<br />
+We tried to make the server work with MariaDB and upload it to the university servers, but we didn't succeed in doing so.<br />
 Because of that, some of the code here wasn't tested.<br />
 We would be grateful if you could go through the code yourselves and grade us according to our efforts.
