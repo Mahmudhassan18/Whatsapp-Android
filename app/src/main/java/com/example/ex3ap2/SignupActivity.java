@@ -85,7 +85,7 @@ public class SignupActivity extends AppCompatActivity {
             etError.setText(R.string.etUsernameUsed);
         }
         else {
-            User user = new User(username, nickname, password, new LinkedList<>());
+            User user = new User(username, nickname, password);
             viewModel.add(user);
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);

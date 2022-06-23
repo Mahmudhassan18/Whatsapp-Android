@@ -11,16 +11,12 @@ import com.example.ex3ap2.repositories.UsersRepository;
 import java.util.List;
 
 public class ContactsViewModel extends ViewModel {
-    private User user;
     private ContactsRepository contactsRepository;
-    private UsersRepository usersRepository;
     private LiveData<List<Contact>> contacts;
 
     public ContactsViewModel(User user) {
         contactsRepository = new ContactsRepository(user);
-        usersRepository = new UsersRepository();
         contacts = contactsRepository.getAll();
-        this.user = user;
     }
 
     public LiveData<List<Contact>> get() {
@@ -29,12 +25,10 @@ public class ContactsViewModel extends ViewModel {
 
     public void add(Contact contact) {
         contactsRepository.add(contact);
-        usersRepository.addContactToUser(user, contact);
     }
 
     public void delete(Contact contact) {
         contactsRepository.delete(contact);
-        usersRepository.deleteContactOfUser(user, contact);
     }
 
     public void reload() {

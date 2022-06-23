@@ -20,18 +20,10 @@ public class User {
 
     private final String password;
 
-    @TypeConverters(ContactsConvertor.class)
-    private List<Contact> contacts;
-
-    public User(String username, String name, String password, List<Contact> contacts) {
+    public User(String username, String name, String password) {
         this.username = username;
         this.name = name;
         this.password = password;
-        this.contacts = contacts;
-    }
-
-    public List<Contact> getContacts() {
-        return contacts;
     }
 
     public int getId(){ return id; }
@@ -49,18 +41,6 @@ public class User {
     }
 
     public void setId(int id){ this.id = id; }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
-    }
-
-    public void addContact(Contact contact){
-        contacts.add(contact);
-    }
-
-    public void removeContact(Contact contact){
-        contacts.remove(contact);
-    }
 
     @Override
     public String toString() {

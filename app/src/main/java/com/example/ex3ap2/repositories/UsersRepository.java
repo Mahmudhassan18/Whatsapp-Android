@@ -49,18 +49,6 @@ public class UsersRepository {
         //api.get();
     }*/
 
-    public void addContactToUser(final User user, final Contact contact) {
-        user.getContacts().add(contact);
-        dao.update(user);
-        userListData.updateData();
-    }
-
-    public void deleteContactOfUser(final User user, final Contact contact) {
-        user.getContacts().remove(contact);
-        dao.update(user);
-        userListData.updateData();
-    }
-
     class UserListData extends MutableLiveData<List<User>> {
         public UserListData() {
             super();

@@ -12,7 +12,6 @@ import com.example.ex3ap2.daos.UserDao;
 import com.example.ex3ap2.typeconverters.ContactsConvertor;
 
 @Database(entities = {User.class, Contact.class}, version = 6)
-@TypeConverters({ContactsConvertor.class})
 public abstract class AppData extends RoomDatabase {
     private static AppData appDataSingleton = null;
 

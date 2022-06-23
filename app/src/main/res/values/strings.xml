@@ -20,5 +20,6 @@
     <string name="add_contact_username">Enter username...</string>
     <string name="add_contact_nickname">Enter nickname...</string>
     <string name="add_contact_server">Enter server...</string>
+    <string name="BaseUrl">http://10.0.2.2:5016/api/</string>
 
 </resources>
