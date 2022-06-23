@@ -1,5 +1,9 @@
 package com.example.ex3ap2.viewmodels;
 
+import android.content.Intent;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,8 +18,8 @@ public class ContactsViewModel extends ViewModel {
     private ContactsRepository contactsRepository;
     private LiveData<List<Contact>> contacts;
 
-    public ContactsViewModel(User user) {
-        contactsRepository = new ContactsRepository(user);
+    public ContactsViewModel(String username) {
+        contactsRepository = new ContactsRepository(username);
         contacts = contactsRepository.getAll();
     }
 
@@ -23,8 +27,9 @@ public class ContactsViewModel extends ViewModel {
         return contacts;
     }
 
-    public void add(Contact contact) {
-        contactsRepository.add(contact);
+    public void add(String contactUsername, String contactNickname, String server,
+                    AppCompatActivity addContactActivity, Intent contactsIntent, TextView etError) {
+        contactsRepository.add(contactUsername, contactNickname, server, addContactActivity, contactsIntent, etError);
     }
 
     public void delete(Contact contact) {

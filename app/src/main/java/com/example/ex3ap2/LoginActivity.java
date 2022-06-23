@@ -20,7 +20,6 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private UsersViewModel viewModel;
-    private List<User> users;
 
     /*
     private AppData appDB;
@@ -33,9 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
-        viewModel.get().observe(this, users -> {
-            this.users = users;
-        });
 
         Button loginSignupBtn = findViewById(R.id.loginSignupBtn);
         Button loginBtn = findViewById(R.id.loginBtn);
@@ -59,28 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (users == null) {
-            tvLoginError.setText("Loading data");
-        }
-        else if (isLoginValid(username, password)){
-            Intent contactsIntent = new Intent(this, ContactsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("username", username);
-            contactsIntent.putExtras(bundle);
-            startActivity(contactsIntent);
-        }
-        else {
-            tvLoginError.setText("Username or Password is incorrect");
-        }
-    }
-
-    private boolean isLoginValid(String username, String password) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return true;
-            }
-        }
-
-        return false;
+        Intent contactsIntent = new Intent(this, ContactsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        contactsIntent.putExtras(bundle);
+        viewModel.login(username, password, this, contactsIntent, tvLoginError);
     }
 }

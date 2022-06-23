@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 public class SignupActivity extends AppCompatActivity {
 
     private UsersViewModel viewModel;
-    private List<User> users;
 
     /*
     private AppData appDB;
@@ -35,9 +34,6 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
-        viewModel.get().observe(this, users -> {
-            this.users = users;
-        });
 
         Button signupLoginBtn = findViewById(R.id.signupLoginBtn);
         Button signupBtn = findViewById(R.id.signupBtn);
@@ -69,10 +65,7 @@ public class SignupActivity extends AppCompatActivity {
         String PASSWORD_PATTERN =
                 "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
         Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-        if (users == null) {
-            etError.setText("Loading data");
-        }
-        else if (username == null || nickname == null || password == null || rePassword == null){
+        if (username == null || nickname == null || password == null || rePassword == null){
             etError.setText(R.string.etNullField);
         }
         else if(!password.equals(rePassword)){
@@ -81,24 +74,9 @@ public class SignupActivity extends AppCompatActivity {
         else if(!pattern.matcher(password).matches()){
             etError.setText(R.string.etPasswordPattern);
         }
-        else if(doesUsernameExist(username)){
-            etError.setText(R.string.etUsernameUsed);
-        }
         else {
-            User user = new User(username, nickname, password);
-            viewModel.add(user);
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            viewModel.signup(username, nickname, password, this, loginIntent, etError);
         }
-    }
-
-    private boolean doesUsernameExist(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

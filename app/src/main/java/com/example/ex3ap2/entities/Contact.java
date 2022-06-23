@@ -23,16 +23,16 @@ public class Contact {
 
     private int pic;
 
-    private int userId;
+    private String user;
 
-    public Contact(String username, String nickname, String server, String last, String lastdate, int userId) {
+    public Contact(String username, String nickname, String server, String last, String lastdate, String user) {
         this.username = username;
         this.nickname = nickname;
         this.server = server;
         this.last = last;
         this.lastdate = lastdate;
         this.pic = R.drawable.ic_defaultimage;
-        this.userId = userId;
+        this.user = user;
     }
 
     public int getId() {
@@ -87,11 +87,11 @@ public class Contact {
         this.pic = pic;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(String userId) {
+        this.user = user;
     }
 }

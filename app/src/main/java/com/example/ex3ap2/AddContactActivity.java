@@ -21,7 +21,6 @@ import java.util.List;
 public class AddContactActivity extends AppCompatActivity {
 
     private ContactsViewModel contactsViewModel;
-    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +29,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String loggedUsername = bundle.getString("username");
-
-        UsersViewModel usersViewModel = new ViewModelProvider(this).get(UsersViewModel.class);
-        loggedUser = usersViewModel.getUserByUsername(loggedUsername);
-        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUser)).get(ContactsViewModel.class);
+        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUsername)).get(ContactsViewModel.class);
 
         Button addContactBtn = findViewById(R.id.addContactBtn);
         addContactBtn.setOnClickListener(view -> {
@@ -52,14 +48,12 @@ public class AddContactActivity extends AppCompatActivity {
                 return;
             }
 
-            Contact contact = new Contact(username, nickname, server, "", "", loggedUser.getId());
-            contactsViewModel.add(contact);
-
             Intent contactsIntent = new Intent(this, ContactsActivity.class);
             Bundle bundle2 = new Bundle();
             bundle2.putString("username", loggedUsername);
             contactsIntent.putExtras(bundle2);
-            startActivity(contactsIntent);
+
+            contactsViewModel.add(username, nickname, server, this, contactsIntent, errorTv);
 
             /*EditText etUsername = findViewById(R.id.addContactUsername);
             TextView errorTv = findViewById(R.id.tvAddContactError);

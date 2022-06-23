@@ -39,10 +39,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String loggedUsername = bundle.getString("username");
-
-        UsersViewModel usersViewModel = new ViewModelProvider(this).get(UsersViewModel.class);
-        loggedUser = usersViewModel.getUserByUsername(loggedUsername);
-        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUser)).get(ContactsViewModel.class);
+        contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory(loggedUsername)).get(ContactsViewModel.class);
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this, contactsViewModel);
